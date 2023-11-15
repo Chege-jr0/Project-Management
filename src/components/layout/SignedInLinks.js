@@ -1,13 +1,22 @@
 import React from "react";
 import {Link, NavLink} from 'react-router-dom'
- const SignedInLinks = () =>{
+import { connect } from "react-redux";
+import { signOut } from "../store/actions/authActions";
+ const SignedInLinks = (props) =>{
     return(
         <ul className="right">
             <li><NavLink to='/createproject'>New Project</NavLink></li>
-            <li><NavLink to='/'>Log out</NavLink></li>
-            <li><NavLink to='/' className='btn btn-floating pink lighten-1'>PC</NavLink></li>
+            <li><a onClick={props.signOut}>Log Out</a></li>
+            <li><NavLink to='/' className='btn btn-floating pink lighten-1'>
+              {props.profile.intials}
+            </NavLink></li>
         </ul>
     )
  }
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        signOut: () => dispatch(signOut())
+    }
+  }
 
- export default SignedInLinks
+ export default connect(null, mapDispatchToProps)(SignedInLinks)
